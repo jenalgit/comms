@@ -1,0 +1,27 @@
+apply plugin: 'jacoco'
+
+jacoco {
+  version = jacocoVersion
+}
+
+android.testOptions {
+  unitTests.all {
+    jacoco.includeNoLocationClasses = true
+  }
+}
+
+task checkCoverage(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+  def fileFilter = [
+      '**/R.class',
+      '**/R$*.class',
+      '**/BuildConfig.*',
+      '**/Manifest*.*',
+      '**/*Test*.*',
+      'android/**/*.*'
+  ]
+
+  def kotlinClassDir = "${buildDir}/tmp/kotlin-classes/debug"
+  classDirectories = files([fileTree(dir: kotlinClassDir, excludes: fileFilter)])
+  sourceDirectories = files(android.sourceSets.main.kotlin.srcDirs)
+  executionData = fileTree(dir: buildDir, includes: ['jacoco/testDebugUnitTest.exec'])
+}

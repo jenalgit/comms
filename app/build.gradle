@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply from: 'buildscripts/detekt.gradle'
+apply from: 'buildscripts/jacoco.gradle'
+
+android {
+  buildToolsVersion '28.0.3'
+  compileSdkVersion 28
+  testOptions.unitTests.includeAndroidResources true
+
+  defaultConfig {
+    applicationId 'io.github.ashutoshgngwr.comms'
+    minSdkVersion 21
+    targetSdkVersion 28
+    versionCode 0
+    versionName '0'
+  }
+
+  sourceSets {
+    main.java.srcDirs = ['src/main/kotlin']
+    test.java.srcDirs = ['src/test/kotlin']
+  }
+
+  buildTypes {
+    debug {
+      testCoverageEnabled true
+    }
+
+    release {
+      testCoverageEnabled false
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt')
+    }
+  }
+}
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+  implementation 'androidx.appcompat:appcompat:1.0.2'
+  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+  testImplementation 'junit:junit:4.12'
+  testImplementation 'org.robolectric:robolectric:4.0.2'
+}

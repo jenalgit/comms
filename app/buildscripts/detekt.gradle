@@ -1,0 +1,14 @@
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+detekt {
+  version = detektVersion
+  input = files('src/main/kotlin')
+  filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+  parallel = true
+}
+
+dependencies {
+  detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:${detektVersion}"
+}
