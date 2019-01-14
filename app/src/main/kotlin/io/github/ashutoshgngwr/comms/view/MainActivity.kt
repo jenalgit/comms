@@ -26,9 +26,12 @@ class MainActivity : AppCompatActivity() {
     ) {
       ActivityCompat.requestPermissions(
         this,
-        arrayOf(Manifest.permission.READ_CONTACTS),
+        arrayOf(Manifest.permission.RECORD_AUDIO),
         RC_PERMISSION_RECORD_AUDIO
       )
+    } else {
+      hideRecordAudioButton()
+      showProgress(R.string.searching_channels)
     }
   }
 
